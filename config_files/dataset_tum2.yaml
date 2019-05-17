@@ -1,0 +1,42 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+
+InputSensorType: 0
+InputDepthScaleFactor: 5200.0
+IntrinsicsImgSize.width: 640
+IntrinsicsImgSize.height: 480
+# Camera calibration and distortion parameters (OpenCV) 
+IntrinsicsCamFx: 520.908620
+IntrinsicsCamFy: 521.007327
+IntrinsicsCamCx: 325.141442
+IntrinsicsCamCy: 249.701764
+IntrinsicsCamK1: 0.262383
+IntrinsicsCamK2: -0.953104
+IntrinsicsCamP1: -0.005358
+IntrinsicsCamP2: 0.002628
+IntrinsicsCamK3: 1.163314
+
+Camera.width: 640
+Camera.height: 480
+
+#cannyThreshold1: 150
+#cannyThreshold2: 100
+cannyThreshold1: 80
+cannyThreshold2: 60
+
+InputCannyEdgeTh1: 80
+InputCannyEdgeTh2: 60
+InputSmoothEdgeImage: 0
+InputComputeGradientsForEdgeDetector: 0
+InputDatasetFile: "associate.txt"
+InputDatasetFolder: "/data/CSI/CSI_SVN/KirasCSISmartCam3D/CSISmartScan3D_Daten/Daten_Testszenen/TUM/freiburg2/rgbd_dataset_freiburg2_desk"
+InputReadNFrames: 5900 #272
+InputDepthMin: 0.1
+InputDepthMax: 5.2
+InputColorFormatRGB: 0
+#Input
+InputSkipFirstNFrames: 0
+

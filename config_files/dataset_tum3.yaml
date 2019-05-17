@@ -1,0 +1,43 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+
+InputSensorType: 0
+InputDepthScaleFactor: 5000.0
+IntrinsicsImgSize.width: 640
+IntrinsicsImgSize.height: 480
+# Camera calibration and distortion parameters (OpenCV) 
+IntrinsicsCamFx: 535.4
+IntrinsicsCamFy: 539.2
+IntrinsicsCamCx: 320.1
+IntrinsicsCamCy: 247.6
+IntrinsicsCamK1: 0.0
+IntrinsicsCamK2: 0.0
+IntrinsicsCamP1: 0.0
+IntrinsicsCamP2: 0.0
+IntrinsicsCamK3: 0.0
+Camera.width: 640
+Camera.height: 480
+
+#cannyThreshold1: 150
+#cannyThreshold2: 100
+cannyThreshold1: 80
+cannyThreshold2: 60
+
+InputCannyEdgeTh1: 80
+InputCannyEdgeTh2: 60
+InputSmoothEdgeImage: 0
+InputComputeGradientsForEdgeDetector: 0
+InputDatasetFile: "associate.txt"
+#InputDatasetFolder: "/data/CSI/CSI_SVN/KirasCSISmartCam3D/CSISmartScan3D_Daten/Daten_Testszenen/TUM/freiburg3/rgbd_dataset_freiburg3_nostructure_texture_near_withloop"
+InputDatasetFolder: "/data/CSI/CSI_SVN/KirasCSISmartCam3D/CSISmartScan3D_Daten/Daten_Testszenen/TUM/freiburg3/rgbd_dataset_freiburg3_long_office_household"
+InputReadNFrames: 3832 #272
+InputDepthMin: 0.1
+InputDepthMax: 5.2
+InputColorFormatRGB: 0
+InputReadGT: 1
+#Input
+InputSkipFirstNFrames: 0
+

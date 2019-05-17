@@ -1,0 +1,58 @@
+%YAML:1.0
+
+#--------------------------------------------------------------------------------------------
+# Camera Parameters. Adjust them!
+#--------------------------------------------------------------------------------------------
+#Sensor settings
+InputSensorType: 0
+InputDepthScaleFactor: 5000.0
+IntrinsicsImgSize.width: 640
+IntrinsicsImgSize.height: 480
+# Camera calibration and distortion parameters (OpenCV) 
+IntrinsicsCamFx: 481.20
+IntrinsicsCamFy: -480.00
+IntrinsicsCamCx: 319.50
+IntrinsicsCamCy: 239.50
+IntrinsicsCamK1: 0.0
+IntrinsicsCamK2: 0.0
+IntrinsicsCamP1: 0.0
+IntrinsicsCamP2: 0.0
+IntrinsicsCamK3: 0.0
+
+InputCannyEdgeTh1: 40
+InputCannyEdgeTh2: 20
+InputSmoothEdgeImage: 0
+InputComputeGradientsForEdgeDetector: 0
+InputDatasetFile: "associate.txt" #_reduced.txt"
+#InputDatasetFolder: "/data/CSI/CSI_SVN/KirasCSISmartCam3D/CSISmartScan3D_Daten/Daten_Testszenen/TUM/freiburg1/rgbd_dataset_freiburg1_desk"
+InputDatasetFolder: "/data/CSI/CSI_SVN/KirasCSISmartCam3D/CSISmartScan3D_Daten/Daten_Testszenen/icl_nuim/lr_kt0"
+InputReadNFrames: 1900 #272
+InputDepthMin: 0.1
+InputDepthMax: 5.2
+InputColorFormatRGB: 0
+#Input
+InputSkipFirstNFrames: 0
+
+#dataset
+#MainFolder: "/home/csi/csi/datasets/"
+#Datasets: ["rgbd_dataset_freiburg1_desk2","rgbd_dataset_freiburg1_xyz"]
+#Datasets: "rgbd_dataset_freiburg1_desk"
+#Datasets: "rgbd_dataset_freiburg1_rpy"
+#ASSOCIATE: "associate.txt"
+#DO_UNDISTORT: 0
+#img pyr settings
+#Pyramid Settings: 0 is img resolution (e.g. 640x480), then always factor 2 smaller
+#PYR_MIN_LVL: 2
+#PYR_MAX_LVL: 0
+#DEPTH_MIN: 0.1 #in [m]
+#DEPTH_MAX: 5.2 #in [m]
+#Increases robustness by taking edges from higher levels
+#see Schenk et al. BMVC 2017
+#USE_EDGE_HIST: 1 
+#nPercentage: 0.3
+#useDepthTimeStamp: 0
+#SKIP_FIRST_N_FRAMES: 0
+#READ_N_IMAGES: 5000
+#DEPTH_SCALE_FACTOR: 5000.0
+#DO_RECORD_IMAGES: 0
+#DO_GAUSSIAN_SMOOTHING_BEFORE_CANNY: 0

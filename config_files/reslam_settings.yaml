@@ -1,0 +1,69 @@
+%YAML:1.0
+#GENERAL
+SystemMultiThreading: 0
+ViewerPointSize: 2
+
+#Tracker
+# TrackerNPyrLevels: 3
+TrackerEvalLvlForInit: 2
+TrackerSkipResdiualsOnLowerLvls: 0
+TrackerTrackFromFrameToKf: 0 #leave it deactivated at the moment!
+TrackerUseWeightsResidualsForErrorComputation: 1
+TrackerResidualHuberWeight: 0.3
+TrackerUseEdgeWeight: 0
+TrackerUseEdgeFilter: 1
+TrackerOpticalFlowTFactor: 0.1
+TrackerOpticalFlowRTFactor: 0.15
+TrackerOpticalFlowThreshold: 1
+TrackerHistDist: 1.5 #For LC
+TrackerAvgResidualBeforeTrackingLoss: 2.5
+
+#Output Settings
+OutputPoses: 1
+OutputRecordImages: 0
+OutputPoseFileFolder: "/data/Software/vo_slam_systems/RESLAM/output_poses/lc_ba/"
+
+#Local Mapper
+EnableLocalMapping: 1
+LocalMapperUseCoarseDistanceMap: 1
+LocalMapperOptimizeDepth: 1
+LocalMapperOptimizeInitDepth: 1
+LocalMapperConditionalDepthOptimization: 1
+LocalMapperMaxDistForValidPixels: 5.0 #5.0
+LocalMapperMinDistInDistMapForValidPixels: 5.0 #7.0
+LocalMapperShowResidualsInImage: 1
+LocalMapperEdgeDistance: 5.0
+LocalMapperLinearProcessing: 1
+LocalMapperDoMarginalize: 1
+LocalMapperAdaptMinActDist: 0
+LocalMapperUseNewPoseUpdate: 0
+
+#Loop Closure
+EnableLoopClosure: 1
+# This sets the minimum distance between two candidates, where we don't close a loop
+LoopClosureMinDistBetweenFrames: 15 
+LoopClosureFramesToCheck: 3
+LoopClosureEdgeWeight: 3 #Insert loop 3 times
+LoopClosureUseBAConstraints: 1
+LoopClosureLinearProcessing: 1
+LoopClosureKeyframeThreshold: 0.25
+LoopClosureNumberOfBAConstraints: 3
+LoopClosureDoNotCloseLoopsIfClosedLastN: 7
+LoopClosureOnlyUseFernKF: 1
+LoopClosureFixWindowPoses: 1
+LoopClosureAddAdjacentConstraints: 0
+LoopClosureDoBackCheck: 1
+#Relocaliser
+EnableRelocaliser: 1
+
+FernDatabaseAlwaysAddKf: 0
+#FernDatabaseHarvestingThreshold: 0.2
+#FernDatabaseNumFerns: 500
+#FernDatabaseNumDecisions: 4
+
+#Debug
+SystemDebugTextOutput: 0
+TrackerShowIterationsDebug: 0
+TrackerShowInitDebug: 0
+LoopClosureDebugShowTransformationImages: 0
+LoopClosureTrackerShowIterations: 0

@@ -1,0 +1,193 @@
+cmake_minimum_required(VERSION 2.8)
+set(PROJECT_NAME "RESLAM")
+project(${PROJECT_NAME})
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+set(SANITIZER "-fsanitize=address -fsanitize=leak -fno-omit-frame-pointer")
+set(SANITIZER "")
+set(OPENMP " -fopenmp")
+# set(OPENMP "")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall -Wunused-variable -Wpedantic -Werror -O3 -g -march=native ${OPENMP} ${SANITIZER}")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -O3 -Wunused-variable -Wpedantic -march=native -g ${OPENMP} ${SANITIZER}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wunused-variable -Wpedantic -Werror -O3 -g -march=native ${OPENMP} ${SANITIZER}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -g -Wunused-variable -Wpedantic -march=native ${OPENMP} ${SANITIZER}")
+#SET(CMAKE_BUILD_TYPE RelWithDebInfo)
+SET(CMAKE_BUILD_TYPE Release)
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+OPTION(WITH_PANGOLIN_VIEWER "Build with Pangolin viewer (DSO)?" ON)
+if (WITH_PANGOLIN_VIEWER)
+    find_package(Pangolin REQUIRED)
+    # decide if we have pangolin
+    if (Pangolin_FOUND)
+            message("--- found PANGOLIN, compiling dso_pangolin library.")
+            include_directories( ${Pangolin_INCLUDE_DIRS} )
+            set(dso_pangolin_SOURCE_FILES
+              ${PROJECT_SOURCE_DIR}/iowrapper/Pangolin/KeyFrameDisplay.cpp
+              ${PROJECT_SOURCE_DIR}/iowrapper/Pangolin/PangolinDSOViewer.cpp)
+            set(HAS_PANGOLIN 1)
+            list(APPEND LIBS ${Pangolin_LIBRARIES})
+            add_definitions(-DWITH_PANGOLIN_VIEWER)
+    else ()
+            message("--- could not find PANGOLIN, not compiling dso_pangolin library.")
+            message("    this means there will be no 3D display / GUI available for dso_dataset.")
+            set(dso_pangolin_SOURCE_FILES )
+            set(HAS_PANGOLIN 0)
+    endif ()
+endif()
+
+#LibRealSense
+# OPTION(WITH_REALSENSE "Build with RealSense Sensor?" OFF)
+# if (WITH_REALSENSE)
+#     list(APPEND SRC_FILES "io/realsensesensor.cpp")
+#     list(APPEND HEADER_FILES "io/realsensesensor.h")
+#     add_definitions(-DWITH_REALSENSE)
+#     list(APPEND LIBS "realsense")
+# endif()
+find_package(OpenCV 3 REQUIRED opencv_core opencv_imgproc opencv_highgui)# opencv_calib3d opencv_videoio opencv_imgcodecs )
+if(NOT OpenCV_FOUND)
+   find_package(OpenCV 2.4.3 QUIET)
+   if(NOT OpenCV_FOUND)
+      message(FATAL_ERROR "OpenCV > 2.4.3 not found.")
+   endif()
+endif()
+
+if (OpenCV_FOUND)
+        message("--- found OpenCV, compiling dso_opencv library.")
+        include_directories( ${OpenCV_INCLUDE_DIRS} )
+        set(HAS_OPENCV 1)
+endif ()
+
+list(APPEND LIBS ${OpenCV_LIBS})
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${FLAGS}")
+set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} ${FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAGS}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAGS}")
+message("OpenCV: ${OpenCV_INCLUDE_DIRS}")
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES("thirdparty/Sophus")
+MESSAGE("${EIGEN_WORLD_VERSION} ${EIGEN_MAJOR_VERSION} ${EIGEN_MINOR_VERSION}")
+
+# OPTION(WITH_ORBBEC_ASTRA_PRO "Compile with Orbbec Astra Pro support (requires FFMPEG and OpenNI)!" ON)
+# OPTION(WITH_ORBBEC_ASTRA "Compile with Orbbec Astra Pro support (requires FFMPEG and OpenNI)!" OFF)
+
+# #FOR Orbbec Astra Pro
+# IF (WITH_ORBBEC_ASTRA_PRO)
+#     if (NOT DEFINED OpenNI_ASTRA_PRO_LIB)
+#        set(OpenNI_ASTRA_PRO_LIB "${CMAKE_SOURCE_DIR}/IOWrapper/orbbec_astra/drivers/libOpenNI2.so")
+#     endif()
+#     if (NOT DEFINED OpenNI_ASTRA_PRO_INCLUDE_DIR)
+#        set(OpenNI_ASTRA_PRO_INCLUDE_DIR " ${CMAKE_SOURCE_DIR}/IOWrapper/orbbec_astra/drivers/Include/")
+#     endif()
+#     include_directories(${OpenNI_ASTRA_PRO_INCLUDE_DIR})
+
+#     add_definitions(-DWITH_ORBBEC_FFMPEG)
+#     include("cmake/external_FFMPEG.cmake")
+#     #now we try to add ffmpegs
+#     list(APPEND SRC_FILES "IOWrapper/orbbec_astra/InputOrbbecAstra.cpp")
+#     list(APPEND HEADER_FILES "IOWrapper/orbbec_astra/InputOrbbecAstra.h")
+#     list(APPEND LIBS ${OpenNI_ASTRA_PRO_LIB} ${FFMPEG_LIBRARIES})
+#     include_directories(${FFMPEG_INCLUDE_DIR})
+#     add_definitions(-DWITH_ORBBEC_ASTRA_PRO)
+# ENDIF(WITH_ORBBEC_ASTRA_PRO)
+
+# #for the standard Orbbec Astra
+# IF (WITH_ORBBEC_ASTRA)
+#     if (NOT DEFINED OpenNI_ASTRA_PRO_LIB)
+#        set(OpenNI_ASTRA_PRO_LIB "${CMAKE_SOURCE_DIR}/orbbec_astra_pro/drivers/libOpenNI2.so")
+#     endif()
+#     if (NOT DEFINED OpenNI_ASTRA_PRO_INCLUDE_DIR)
+#        set(OpenNI_ASTRA_PRO_INCLUDE_DIR " ${CMAKE_SOURCE_DIR}/orbbec_astra_pro/drivers/Include/")
+#     endif()
+#     include_directories(${OpenNI_ASTRA_PRO_INCLUDE_DIR})
+#     list(APPEND SRC_FILES "orbbec_astra_pro/OrbbecAstraOpenNIEngine.cpp")
+#     list(APPEND HEADER_FILES "orbbec_astra_pro/OrbbecAstraOpenNIEngine.h")
+#     add_definitions(-DWITH_ORBBEC_ASTRA)
+# ENDIF(WITH_ORBBEC_ASTRA)
+
+find_package(Boost COMPONENTS system filesystem thread REQUIRED)
+list(APPEND LIBS ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_THREAD_LIBRARY})
+
+OPTION(WITH_PANGOLIN_VIEWER "Build with Pangolin viewer (DSO)?" ON)
+if (WITH_PANGOLIN_VIEWER)
+    find_package(Pangolin REQUIRED)
+    # decide if we have pangolin
+    if (Pangolin_FOUND)
+            message("--- found PANGOLIN, compiling dso_pangolin library.")
+            include_directories( ${Pangolin_INCLUDE_DIRS} )
+            set(dso_pangolin_SOURCE_FILES
+              ${PROJECT_SOURCE_DIR}/GUI/Pangolin/KeyFrameDisplay.cpp
+              ${PROJECT_SOURCE_DIR}/GUI/Pangolin/PangolinDSOViewer.cpp)
+            set(HAS_PANGOLIN 1)
+            list(APPEND LIBS ${Pangolin_LIBRARIES})
+            add_definitions(-DWITH_PANGOLIN_VIEWER)
+    else ()
+            message("--- could not find PANGOLIN, not compiling dso_pangolin library.")
+            message("    this means there will be no 3D display / GUI available for dso_dataset.")
+            set(dso_pangolin_SOURCE_FILES )
+            set(HAS_PANGOLIN 0)
+    endif ()
+
+endif()
+
+
+#UTILS
+list(APPEND UTILITY_SRC_FILES "Utils/Logging.cpp")
+list(APPEND UTILITY_HEADER_FILES "Utils/timer.h" "Utils/Logging.h" "Utils/LGSX.h" "Utils/utility_functions.h")
+
+#DATA STRUCTURES
+OPTION(WITH_POSE_GRAPH "BUILD WITH POSE GRAPH FRAME OPTIMIZATION" ON)
+if (WITH_POSE_GRAPH)
+    add_definitions(-DWWITH_POSE_GRAPH)
+  find_package(Ceres REQUIRED)
+  include_directories(${CERES_INCLUDE_DIRS})
+    list(APPEND LIBS ${CERES_LIBRARIES})
+    MESSAGE("APPENDED LOOP FILES ${SUITESPARSE_INCLUDE_DIRS}")
+endif()
+
+OPTION(WITH_RELOCALISER "BUILD RELOCALISER DEPENDENCIES" ON)
+OPTION(WITH_LOOP_CLOSURE "BUILD LOOP CLOSURE DEPENDENCIES (triggers also WITH_RELOCALISER)" ON)
+if (WITH_LOOP_CLOSURE)
+    add_definitions(-DWITH_LOOP_CLOSURE)
+    set(WITH_FERN_LIB TRUE)
+    set(WITH_RELOCALISER TRUE)
+  find_package(Ceres REQUIRED)
+  include_directories(${CERES_INCLUDE_DIRS})
+    list(APPEND DATASTRUC_SRC_FILES "Relocaliser/ceresloopcloser.cpp")
+    list(APPEND DATASTRUC_HEADER_FILES "Relocaliser/ceresloopcloser.h")# "relocaliser/types.h")
+    list(APPEND LIBS ${CERES_LIBRARIES})
+    MESSAGE("APPENDED LOOP FILES ${SUITESPARSE_INCLUDE_DIRS}")
+endif()
+if (WITH_RELOCALISER)
+    set(WITH_FERN_LIB TRUE)
+    add_definitions(-DWITH_RELOCALISER)
+    list(APPEND DATASTRUC_SRC_FILES "Relocaliser/Relocaliser.cpp")
+    list(APPEND DATASTRUC_HEADER_FILES "Relocaliser/Relocaliser.h" "Relocaliser/types.h")
+endif()
+#For relocalisation and loop closure
+if (WITH_FERN_LIB)
+    list(APPEND DATASTRUC_SRC_FILES "Relocaliser/LoopCloser.cpp")
+    list(APPEND DATASTRUC_HEADER_FILES "Relocaliser/LoopCloser.h" "Relocaliser/types.h")
+    list(APPEND LOOP_SRC_FILES "Relocaliser/FernRelocLib/FernConservatory.cpp" "Relocaliser/FernRelocLib/RelocDatabase.cpp" "Relocaliser/FernRelocLib/fernrelocaliser.cpp")
+    list(APPEND LOOP_HEADER_FILES "Relocaliser/FernRelocLib/FernConservatory.h" "Relocaliser/FernRelocLib/RelocDatabase.h" "Relocaliser/FernRelocLib/fernrelocaliser.h")
+endif()
+
+#Input/Output
+list(APPEND DATASTRUC_SRC_FILES "IOWrapper/Input.cpp" "IOWrapper/DataStructures.cpp")
+list(APPEND DATASTRUC_HEADER_FILES "IOWrapper/Input.h" "IOWrapper/DataStructures.h")
+
+#Config
+list(APPEND CONFIG_HEADER_FILES "config/Defines.h")
+
+#OPTIMIZATION
+list(APPEND OPTIMIZATION_SRC_FILES "System/Mapper.cpp" "System/System.cpp" "System/Tracker.cpp" "System/LocalMapper.cpp" "System/WindowedOptimizer.cpp")
+list(APPEND OPTIMIZATION_HEADER_FILES "System/Mapper.h" "System/System.h" "System/SystemSettings.h" "System/Tracker.h" "System/LocalMapper.h" "System/WindowedOptimizer.h")
+list(APPEND OPTIMIZATION_SRC_FILES "Utils/AccumulatedSCHessian.cpp" "Utils/AccumulatedTopHessian.cpp" "Utils/CoarseDistanceMap.cpp")
+list(APPEND OPTIMIZATION_HEADER_FILES "Utils/AccumulatedSCHessian.h" "Utils/AccumulatedTopHessian.h" "Utils/CoarseDistanceMap.h")
+
+list(APPEND SRC_FILES ${SRC_FILES} "main.cpp")
+add_executable(${PROJECT_NAME} ${SRC_FILES} ${HEADER_FILES} ${OPTIMIZATION_SRC_FILES} ${OPTIMIZATION_HEADER_FILES} ${CONFIG_HEADER_FILES} ${CONFIG_SRC_FILES}
+               ${UTILITY_SRC_FILES} ${UTILITY_HEADER_FILES} ${DATASTRUC_SRC_FILES} ${DATASTRUC_HEADER_FILES} ${LOOP_SRC_FILES} ${LOOP_HEADER_FILES}
+               ${dso_pangolin_SOURCE_FILES} ${dso_opencv_SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} ${LIBS}${SANITIZER})
