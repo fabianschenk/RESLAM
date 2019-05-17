@@ -1,11 +1,11 @@
 # RESLAM: A real-time robust edge-based SLAM system
 
-**Please note that the code is still in the testing phase.**
+**Please note that the code is still in the testing phase and I plan to update some parts soon!**
 
 In this work, we present **RESLAM**, a robust edge-based SLAM system for RGBD sensors. Edges are more stable under varying lighting conditions than raw intensity values, which leads to higher accuracy and robustness in scenes, where feature- or photoconsistency-based approaches often fail. The results show that our method performs best in terms of trajectory accuracy for most of the sequences indicating that edges are suitable for a multitude of scenes.
 
 ## If you use this work, please cite any of the following publications:
-* **RESLAM: A real-time robust edge-based SLAM system**, Schenk Fabian, Fraundorfer Friedrich, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_uavg_2019.pdf)
+* **RESLAM: A real-time robust edge-based SLAM system**, Schenk Fabian, Fraundorfer Friedrich, ICRA 2019, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_uavg_2019.pdf)
 * **Combining Edge Images and Depth Maps for Robust Visual Odometry**, Schenk Fabian, Fraundorfer Friedrich, BMVC 2017, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_bmvc_2018.pdf),[video](https://youtu.be/uj3rRyqSEnQ)
 * **Robust Edge-based Visual Odometry using Machine-Learned Edges**, Schenk Fabian, Fraundorfer Friedrich, IROS 2017, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_iros_2017.pdf), [video](https://youtu.be/PUTV9vsdpbA)
 
@@ -42,6 +42,9 @@ make -j
 ```
 
 ## How to reproduce the results from the paper
+
+**If you enable multi-threading, results might differ a bit since float additions are not executed in the same order during each run!**
+
 ### [TUM dataset](https://vision.in.tum.de/data/datasets/rgbd-dataset)
 Download the sequence you want to test and specify the "associate.txt" file in the dataset_tumX.yaml settings file.
 
@@ -60,7 +63,7 @@ For evaluation of the absolute trajectory error (ATE) and relative pose error (R
 
 Support for other sensors such as Orbbec Astra Pro and Intel RealSense will follow in the next weeks.
 
-<REVO supports three different sensors at the moment:
+<!--- REVO supports three different sensors at the moment:
 * [Orbbec Astra Pro Sensor](https://orbbec3d.com/product-astra-pro/)
 * [Orbbec Astra Sensor](https://orbbec3d.com/product-astra/)
 * [Intel Realsense ZR300 (other versions are untested!)](https://click.intel.com/intelr-realsensetm-development-kit-featuring-the-zr300.html)
@@ -116,4 +119,4 @@ make install
 There was a problem with the old REVO version and a new Sophus version that introduced orthogonality checks for rotation matrices. 
 If you face such an error, simply check out the current version of REVO.
 ### Orbbec with LIBUVC and Intel Realsense
-If WITH_ORRBEC_UVC is set, there is a conflict with the librealsense! To solve this issue, use WITH_ORBBEC_FFMPEG!>
+If WITH_ORRBEC_UVC is set, there is a conflict with the librealsense! To solve this issue, use WITH_ORBBEC_FFMPEG!-->
