@@ -5,7 +5,7 @@
 In this work, we present **RESLAM**, a robust edge-based SLAM system for RGBD sensors. Edges are more stable under varying lighting conditions than raw intensity values, which leads to higher accuracy and robustness in scenes, where feature- or photoconsistency-based approaches often fail. The results show that our method performs best in terms of trajectory accuracy for most of the sequences indicating that edges are suitable for a multitude of scenes.
 
 ## If you use this work, please cite any of the following publications:
-* **RESLAM: A real-time robust edge-based SLAM system**, Schenk Fabian, Fraundorfer Friedrich, ICRA 2019, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_uavg_2019.pdf)
+* **RESLAM: A real-time robust edge-based SLAM system**, Schenk Fabian, Fraundorfer Friedrich, ICRA 2019, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_icra_2019.pdf)
 * **Combining Edge Images and Depth Maps for Robust Visual Odometry**, Schenk Fabian, Fraundorfer Friedrich, BMVC 2017, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_bmvc_2018.pdf),[video](https://youtu.be/uj3rRyqSEnQ)
 * **Robust Edge-based Visual Odometry using Machine-Learned Edges**, Schenk Fabian, Fraundorfer Friedrich, IROS 2017, [pdf](https://github.com/fabianschenk/fabianschenk.github.io/raw/master/files/schenk_iros_2017.pdf), [video](https://youtu.be/PUTV9vsdpbA)
 
