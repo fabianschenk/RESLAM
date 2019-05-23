@@ -180,12 +180,12 @@ void PangolinDSOViewer::run()
 	pangolin::Var<bool> settings_resetButton("ui.Reset",false,false);
 
 
-	pangolin::Var<int> settings_nCandidates("ui.pointCandidates",setting_desiredImmatureDensity, 50,5000, false);
-	pangolin::Var<double> settings_kfFrequency("ui.kfFrequency",setting_kfGlobalWeight,0.1,3, false);
-	pangolin::Var<double> settings_gradHistAdd("ui.minGradAdd",setting_minGradHistAdd,0,15, false);
+	// pangolin::Var<int> settings_nCandidates("ui.pointCandidates",setting_desiredImmatureDensity, 50,5000, false);
+	// pangolin::Var<double> settings_kfFrequency("ui.kfFrequency",setting_kfGlobalWeight,0.1,3, false);
+	// pangolin::Var<double> settings_gradHistAdd("ui.minGradAdd",setting_minGradHistAdd,0,15, false);
 
-	pangolin::Var<double> settings_trackFps("ui.Track fps",0,0,0,false);
-	pangolin::Var<double> settings_mapFps("ui.KF fps",0,0,0,false);
+	// pangolin::Var<double> settings_trackFps("ui.Track fps",0,0,0,false);
+	// pangolin::Var<double> settings_mapFps("ui.KF fps",0,0,0,false);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -233,21 +233,21 @@ void PangolinDSOViewer::run()
 
 
 		// update fps counters
-		{
-			openImagesMutex.lock();
-			float sd=0;
-			for(float d : lastNMappingMs) sd+=d;
-			settings_mapFps=lastNMappingMs.size()*1000.0f / sd;
-			openImagesMutex.unlock();
-		}
+		// {
+		// 	openImagesMutex.lock();
+		// 	float sd=0;
+		// 	for(float d : lastNMappingMs) sd+=d;
+		// 	settings_mapFps=lastNMappingMs.size()*1000.0f / sd;
+		// 	openImagesMutex.unlock();
+		// }
 
-		{
-			model3DMutex.lock();
-			float sd=0;
-			for(float d : lastNTrackingMs) sd+=d;
-			settings_trackFps = lastNTrackingMs.size()*1000.0f / sd;
-			model3DMutex.unlock();
-		}
+		// {
+		// 	model3DMutex.lock();
+		// 	float sd=0;
+		// 	for(float d : lastNTrackingMs) sd+=d;
+		// 	settings_trackFps = lastNTrackingMs.size()*1000.0f / sd;
+		// 	model3DMutex.unlock();
+		// }
 
 		if(setting_render_displayVideo)
 		{
@@ -298,7 +298,7 @@ void PangolinDSOViewer::run()
 	    this->settings_minRelBS = settings_minRelBS.Get();
 	    this->settings_sparsity = settings_sparsity.Get();
 
-	    setting_desiredImmatureDensity = settings_nCandidates.Get();
+	    // setting_desiredImmatureDensity = settings_nCandidates.Get();
 
 	    if(settings_resetButton.Get())
 	    {
