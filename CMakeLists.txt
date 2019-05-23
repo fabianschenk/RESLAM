@@ -15,26 +15,26 @@ SET(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-OPTION(WITH_PANGOLIN_VIEWER "Build with Pangolin viewer (DSO)?" ON)
-if (WITH_PANGOLIN_VIEWER)
-    find_package(Pangolin REQUIRED)
-    # decide if we have pangolin
-    if (Pangolin_FOUND)
-            message("--- found PANGOLIN, compiling dso_pangolin library.")
-            include_directories( ${Pangolin_INCLUDE_DIRS} )
-            set(dso_pangolin_SOURCE_FILES
-              ${PROJECT_SOURCE_DIR}/iowrapper/Pangolin/KeyFrameDisplay.cpp
-              ${PROJECT_SOURCE_DIR}/iowrapper/Pangolin/PangolinDSOViewer.cpp)
-            set(HAS_PANGOLIN 1)
-            list(APPEND LIBS ${Pangolin_LIBRARIES})
-            add_definitions(-DWITH_PANGOLIN_VIEWER)
-    else ()
-            message("--- could not find PANGOLIN, not compiling dso_pangolin library.")
-            message("    this means there will be no 3D display / GUI available for dso_dataset.")
-            set(dso_pangolin_SOURCE_FILES )
-            set(HAS_PANGOLIN 0)
-    endif ()
-endif()
+# OPTION(WITH_PANGOLIN_VIEWER "Build with Pangolin viewer (DSO)?" ON)
+# if (WITH_PANGOLIN_VIEWER)
+#     find_package(Pangolin REQUIRED)
+#     # decide if we have pangolin
+#     if (Pangolin_FOUND)
+#             message("--- found PANGOLIN, compiling dso_pangolin library.")
+#             include_directories( ${Pangolin_INCLUDE_DIRS} )
+#             set(dso_pangolin_SOURCE_FILES
+#               ${PROJECT_SOURCE_DIR}/iowrapper/Pangolin/KeyFrameDisplay.cpp
+#               ${PROJECT_SOURCE_DIR}/iowrapper/Pangolin/PangolinDSOViewer.cpp)
+#             set(HAS_PANGOLIN 1)
+#             list(APPEND LIBS ${Pangolin_LIBRARIES})
+#             add_definitions(-DWITH_PANGOLIN_VIEWER)
+#     else ()
+#             message("--- could not find PANGOLIN, not compiling dso_pangolin library.")
+#             message("    this means there will be no 3D display / GUI available for dso_dataset.")
+#             set(dso_pangolin_SOURCE_FILES )
+#             set(HAS_PANGOLIN 0)
+#     endif ()
+# endif()
 
 #LibRealSense
 # OPTION(WITH_REALSENSE "Build with RealSense Sensor?" OFF)
