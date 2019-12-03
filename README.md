@@ -20,6 +20,7 @@ So far, the framework has only been built and tested on the following system.
 * [Ubuntu 16.04, 15.10, 17.04](https://www.ubuntu.com/)
 * [OpenCV > 3](http://opencv.org/)
 * [Eigen > 3.3](http://eigen.tuxfamily.org/index.php?title=Main_Page)
+* [Ceres >= 1.13](http://ceres-solver.org/installation.html)
 
 
 [Sophus](https://github.com/strasdat/Sophus) is now part of this repository (in thirdparty/Sophus).
@@ -40,6 +41,11 @@ cd build
 cmake . ..
 make -j
 ```
+
+### Known Issues
+Some people report a problem with Ceres/Eigen.
+Please, have a look at [#2](https://github.com/fabianschenk/RESLAM/issues/2), and [#3](https://github.com/fabianschenk/RESLAM/issues/3).
+Make sure that you have the latest (stable) [Eigen version 3.3.X](http://eigen.tuxfamily.org/index.php?title=Main_Page) and that it matches the one used by Ceres.
 
 ## How to reproduce the results from the paper
 
