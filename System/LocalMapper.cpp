@@ -744,14 +744,16 @@ void LocalMapper::marginalizeFrame(FrameData* frame)
                 if(ph->lastResiduals[0].first == r)
                     ph->lastResiduals[0].first = nullptr;
                 else
+                {
                     if(ph->lastResiduals[1].first == r)
                         ph->lastResiduals[1].first = nullptr;
-                    if(r->host->mKeyFrameId < r->target->mKeyFrameId)
-                        statistics_numForceDroppedResFwd++;
-                    else
-                        statistics_numForceDroppedResBwd++;
-                    mWindowedOptimizer->dropResidual(r->efResidual);
-                    ph->edgeResiduals.erase(resIt);
+                }
+                if(r->host->mKeyFrameId < r->target->mKeyFrameId)
+                    statistics_numForceDroppedResFwd++;
+                else
+                    statistics_numForceDroppedResBwd++;
+                mWindowedOptimizer->dropResidual(r->efResidual);
+                ph->edgeResiduals.erase(resIt);
             }
         }
     }
