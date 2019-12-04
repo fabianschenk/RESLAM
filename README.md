@@ -1,6 +1,6 @@
 # RESLAM: A real-time robust edge-based SLAM system
 
-**Please note that the code is still in the testing phase and I plan to update some parts soon!**
+**Please note that RESLAM is a research project and its code is released without any warranty. RESLAM will most likely not be developed any further**
 
 In this work, we present **RESLAM**, a robust edge-based SLAM system for RGBD sensors. Edges are more stable under varying lighting conditions than raw intensity values, which leads to higher accuracy and robustness in scenes, where feature- or photoconsistency-based approaches often fail. The results show that our method performs best in terms of trajectory accuracy for most of the sequences indicating that edges are suitable for a multitude of scenes.
 
@@ -43,9 +43,16 @@ make -j
 ```
 
 ### Known Issues
+#### Segmentation Fault with Ceres/Eigen [#2](https://github.com/fabianschenk/RESLAM/issues/2), and [#3](https://github.com/fabianschenk/RESLAM/issues/3).
 Some people report a problem with Ceres/Eigen.
 Please, have a look at [#2](https://github.com/fabianschenk/RESLAM/issues/2), and [#3](https://github.com/fabianschenk/RESLAM/issues/3).
 Make sure that you have the latest (stable) [Eigen version 3.3.X](http://eigen.tuxfamily.org/index.php?title=Main_Page) and that it matches the one used by Ceres.
+
+#### Segmentation fault after repeated tracking losses [#3](https://github.com/fabianschenk/RESLAM/issues/3)
+In some sequences, e.g. `freiburg2_large_with_loop`, there are depth maps containing mostly invalid values.
+The problem is that the Kinect and most other RGBD sensors cannot reconstruct surfaces far away from sensor (around > 6 m) due to the small baseline of the sensor.
+In such cases, RESLAM does not work and might fail with a segmentation fault after repeated tracking losses. This issue will hopefully be fixed in the future.
+
 
 ## How to reproduce the results from the paper
 
@@ -65,9 +72,11 @@ In the "RESLAM" directory:
 build/RESLAM config_files/reslam_settings.yaml config_files/dataset_tum1.yaml
 ```
 For evaluation of the absolute trajectory error (ATE) and relative pose error (RPE) download the corresponding scripts from [TUM RGBD Tools](https://svncvpr.in.tum.de/cvpr-ros-pkg/trunk/rgbd_benchmark/rgbd_benchmark_tools/src/rgbd_benchmark_tools/).
+
+ 
 ## Supported Sensors
 
-Support for other sensors such as Orbbec Astra Pro and Intel RealSense will follow in the next weeks.
+Support for other sensors such as Orbbec Astra Pro and Intel RealSense can be adapted from [REVO](https://github.com/fabianschenk/REVO).
 
 <!--- REVO supports three different sensors at the moment:
 * [Orbbec Astra Pro Sensor](https://orbbec3d.com/product-astra-pro/)
